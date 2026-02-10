@@ -22,6 +22,7 @@
       text-align: center;
       box-shadow: 0 15px 40px rgba(0,0,0,0.2);
       max-width: 400px;
+      position: relative;
     }
 
     h1 {
@@ -34,15 +35,18 @@
     }
 
     img {
-      width: 200px;
+      width: 250px;
       border-radius: 15px;
       margin: 15px 0;
     }
 
     .buttons {
       margin-top: 20px;
-      position: relative;
-      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      min-height: 60px;
     }
 
     button {
@@ -51,17 +55,18 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: transform 0.2s, font-size 0.2s;
     }
 
     #yesBtn {
       background: #ff4d6d;
       color: white;
+      z-index: 10;
     }
 
     #noBtn {
       background: #ccc;
-      position: absolute;
+      white-space: nowrap;
     }
 
     .hidden {
@@ -78,11 +83,15 @@
 </head>
 <body>
 
+  <audio id="osamasonSong">
+    <source src="https://www.mboxdrive.com/OsamaSon-Ref.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="card" id="card">
     <h1>Marketko ❤️</h1>
-    <p>Budeš můj Valentýn miláčku můj?</p>
+    <p>Budeš můj Valentýn miláčku? 🤗</p>
 
-    <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Penguins love">
+    <img src="https://64.media.tumblr.com/tumblr_lk1a79C4oZ1qj81xyo1_500.gif" alt="Cute gif">
 
     <div class="buttons">
       <button id="yesBtn">Ano 💖</button>
@@ -93,8 +102,7 @@
   <div class="card hidden" id="success">
     <h1>Já jsem si to myslel 😍</h1>
     <p>miláčku 🤗<br>podívej se pod postel</p>
-
-    <img src="https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif" alt="Happy penguins">
+    <img src="https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif" alt="Happy gif">
   </div>
 
   <canvas id="confetti"></canvas>
@@ -104,17 +112,25 @@
     const yesBtn = document.getElementById("yesBtn");
     const card = document.getElementById("card");
     const success = document.getElementById("success");
+    const song = document.getElementById("osamasonSong");
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 250;
-      const y = Math.random() * 50;
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    });
+    let scale = 1;
+
+    function shrinkNo() {
+      scale -= 0.15;
+      if (scale < 0.2) scale = 0.2; 
+      noBtn.style.transform = `scale(${scale})`;
+    }
+
+    noBtn.addEventListener("mouseover", shrinkNo);
+    noBtn.addEventListener("click", shrinkNo);
 
     yesBtn.addEventListener("click", () => {
       card.classList.add("hidden");
       success.classList.remove("hidden");
+      
+      song.play().catch(error => console.log("Hudba se nespustila:", error));
+      
       startConfetti();
     });
 
