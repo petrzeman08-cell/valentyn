@@ -71,8 +71,8 @@
 
   <div class="card hidden" id="success">
     <h1>Jupííííííííííííííí❤❤❤</h1>
-    <p>moc tě miluju😘<br>podívej se pod postel je tam překvápko🤗</p>
-    <img src="https://media.tenor.com/LGXVwQg0cb0AAAAM/%EB%AA%A8%EC%B0%8C%EB%83%A5.gif">
+    <p>moc tě miluju😘<br>podívej se pod postal bude tam překvápko🤗</p>
+    <img src="IMG_1444.png">
   </div>
 
   <canvas id="confetti"></canvas>
@@ -99,18 +99,17 @@
       card.classList.add("hidden");
       success.classList.remove("hidden");
       
-      // Spuštění songu
+      // Spuštění songu po interakci (kliknutí)
       song.volume = 1.0;
       song.play().catch(error => {
-        console.log("První pokus o audio selhal, zkusíme náhradní:", error);
-        // Pokus o spuštění při dalším dotyku kdekoli na stránce (prohlížeče to občas vyžadují)
+        console.log("Audio se nepovedlo přehrát:", error);
         document.body.addEventListener('click', () => song.play(), {once: true});
       });
       
       startConfetti();
     });
 
-    // Konfety
+    // Konfety kód
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
