@@ -32,6 +32,7 @@
 
     p {
       font-size: 18px;
+      line-height: 1.5;
     }
 
     img {
@@ -55,7 +56,7 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s, font-size 0.2s;
+      transition: transform 0.2s;
     }
 
     #yesBtn {
@@ -84,7 +85,7 @@
 <body>
 
   <audio id="osamasonSong">
-    <source src="https://www.mboxdrive.com/OsamaSon-Ref.mp3" type="audio/mpeg">
+    <source src="https://files.catbox.moe/kivlsu.mp3" type="audio/mpeg">
   </audio>
 
   <div class="card" id="card">
@@ -100,8 +101,9 @@
   </div>
 
   <div class="card hidden" id="success">
-    <h1>Já jsem si to myslel 😍</h1>
-    <p>miláčku 🤗<br>podívej se pod postel</p>
+    <h1>Jupííííííííííííííí❤❤❤</h1>
+    <p>moc tě miluju😘<br>podívej se pod postal bude tam překvápko🤗</p>
+    
     <img src="https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif" alt="Happy gif">
   </div>
 
@@ -129,6 +131,7 @@
       card.classList.add("hidden");
       success.classList.remove("hidden");
       
+      // Spuštění songu
       song.play().catch(error => console.log("Hudba se nespustila:", error));
       
       startConfetti();
