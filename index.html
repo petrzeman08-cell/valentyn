@@ -56,7 +56,7 @@
 <body>
 
   <audio id="osamasonSong" preload="auto">
-    <source src="https://www.mboxdrive.com/OsamaSon-Ref.mp3" type="audio/mpeg">
+    <source src="OsamaSon-Ref.mp3" type="audio/mpeg">
   </audio>
 
   <div class="card" id="card">
@@ -99,13 +99,18 @@
       card.classList.add("hidden");
       success.classList.remove("hidden");
       
-      // Spuštění songu hned po kliku
-      song.volume = 0.5;
-      song.play().catch(e => console.log("Chyba audia:", e));
+      // Spuštění songu
+      song.volume = 1.0;
+      song.play().catch(error => {
+        console.log("První pokus o audio selhal, zkusíme náhradní:", error);
+        // Pokus o spuštění při dalším dotyku kdekoli na stránce (prohlížeče to občas vyžadují)
+        document.body.addEventListener('click', () => song.play(), {once: true});
+      });
       
       startConfetti();
     });
 
+    // Konfety
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
