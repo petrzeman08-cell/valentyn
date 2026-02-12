@@ -25,21 +25,9 @@
       position: relative;
     }
 
-    h1 {
-      color: #ff4d6d;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.5;
-    }
-
-    img {
-      width: 250px;
-      border-radius: 15px;
-      margin: 15px 0;
-    }
+    h1 { color: #ff4d6d; margin-bottom: 10px; }
+    p { font-size: 18px; line-height: 1.5; }
+    img { width: 250px; border-radius: 15px; margin: 15px 0; object-fit: cover; }
 
     .buttons {
       margin-top: 20px;
@@ -59,41 +47,22 @@
       transition: transform 0.2s;
     }
 
-    #yesBtn {
-      background: #ff4d6d;
-      color: white;
-      z-index: 10;
-    }
-
-    #noBtn {
-      background: #ccc;
-      white-space: nowrap;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
+    #yesBtn { background: #ff4d6d; color: white; z-index: 10; }
+    #noBtn { background: #ccc; white-space: nowrap; }
+    .hidden { display: none; }
+    canvas { position: fixed; top: 0; left: 0; pointer-events: none; }
   </style>
 </head>
 <body>
 
-  <audio id="osamasonSong">
-    <source src="https://files.catbox.moe/kivlsu.mp3" type="audio/mpeg">
+  <audio id="osamasonSong" preload="auto">
+    <source src="https://www.mboxdrive.com/OsamaSon-Ref.mp3" type="audio/mpeg">
   </audio>
 
   <div class="card" id="card">
     <h1>Marketko ❤️</h1>
     <p>Budeš můj Valentýn miláčku? 🤗</p>
-
-    <img src="https://64.media.tumblr.com/tumblr_lk1a79C4oZ1qj81xyo1_500.gif" alt="Cute gif">
-
+    <img src="https://64.media.tumblr.com/tumblr_lk1a79C4oZ1qj81xyo1_500.gif">
     <div class="buttons">
       <button id="yesBtn">Ano 💖</button>
       <button id="noBtn">Ne 🙈</button>
@@ -103,8 +72,7 @@
   <div class="card hidden" id="success">
     <h1>Jupííííííííííííííí❤❤❤</h1>
     <p>moc tě miluju😘<br>podívej se pod postal bude tam překvápko🤗</p>
-    
-    <img src="https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif" alt="Happy gif">
+    <img src="https://media.tenor.com/LGXVwQg0cb0AAAAM/%EB%AA%A8%EC%B0%8C%EB%83%A5.gif">
   </div>
 
   <canvas id="confetti"></canvas>
@@ -131,8 +99,9 @@
       card.classList.add("hidden");
       success.classList.remove("hidden");
       
-      // Spuštění songu
-      song.play().catch(error => console.log("Hudba se nespustila:", error));
+      // Spuštění songu hned po kliku
+      song.volume = 0.5;
+      song.play().catch(e => console.log("Chyba audia:", e));
       
       startConfetti();
     });
@@ -141,35 +110,26 @@
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     let confetti = [];
-
     function startConfetti() {
       for (let i = 0; i < 200; i++) {
         confetti.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 6 + 2,
-          d: Math.random() * 5 + 2,
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          r: Math.random() * 6 + 2, d: Math.random() * 5 + 2,
           color: `hsl(${Math.random() * 360}, 100%, 50%)`
         });
       }
       animate();
     }
-
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       confetti.forEach(c => {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = c.color;
-        ctx.fill();
-        c.y += c.d;
+        ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fillStyle = c.color; ctx.fill(); c.y += c.d;
         if (c.y > canvas.height) c.y = 0;
       });
       requestAnimationFrame(animate);
     }
   </script>
-
 </body>
 </html>
